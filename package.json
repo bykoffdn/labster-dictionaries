@@ -1,6 +1,6 @@
 {
   "name": "labster-dictionary",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,18 +8,29 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@darwin-studio/ui-vue": "^0.36.13",
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "^3.0.0",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/eslint-parser": "^7.12.1",
-    "@vue/cli-plugin-babel": "^5.0.0-alpha.3",
-    "@vue/cli-plugin-eslint": "^5.0.0-alpha.3",
-    "@vue/cli-service": "^5.0.0-alpha.3",
-    "eslint": "^7.15.0",
-    "eslint-plugin-vue": "^7.2.0",
-    "vue-template-compiler": "^2.6.11"
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "autoprefixer": "^10.2.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "postcss": "^8.2.2",
+    "prettier": "^1.19.1",
+    "sass": "^1.32.0",
+    "sass-loader": "^10.1.0",
+    "vue": "^3.0.5",
+    "webpack-cli": "^4.3.1"
   },
   "eslintConfig": {
     "root": true,
@@ -27,11 +38,11 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "@babel/eslint-parser"
+      "parser": "babel-eslint"
     },
     "rules": {}
   },
