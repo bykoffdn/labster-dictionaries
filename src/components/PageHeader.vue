@@ -1,5 +1,5 @@
 <template>
-  <DGrid>
+  <DGrid tag="header">
     <DTypography size="h1">{{ interfaceCopyright.heading }}</DTypography>
 
     <div class="new-dictionary-container">
@@ -26,7 +26,7 @@
 import { mapState } from "vuex";
 
 /** static data **/
-import interfaceCopyright from "../../interface-copyright/pageHeading";
+import interfaceCopyright from "../../interface-copyright/pageHeader";
 
 /** utils **/
 import { utils } from "@darwin-studio/ui-vue";

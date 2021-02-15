@@ -104,7 +104,8 @@ export default {
         // insert new row
         this.$store.dispatch("createDictionaryRow", {
           id: this.data.id,
-          rowData: { from, to }
+          from,
+          to
         });
       } else {
         this.notification = "";
@@ -113,7 +114,6 @@ export default {
           this.notification = interfaceCopyright.invalidRowDataNotification;
         });
       }
-      console.log("addRowHandler");
     },
 
     updateRowHandler({ prevFrom, from, to }) {
@@ -122,6 +122,18 @@ export default {
       if (prevFrom && from && to) {
         // prevFrom is used to identify which row we are going to update
         // of course in production we should use id, but this is a test project
+        this.$store.dispatch("updateDictionaryRow", {
+          id: this.data.id,
+          prevFrom,
+          from,
+          to
+        });
+      } else {
+        this.notification = "";
+
+        this.$nextTick(() => {
+          this.notification = interfaceCopyright.invalidRowDataNotification;
+        });
       }
     },
 
@@ -129,8 +141,7 @@ export default {
       console.log("deleteRowHandler", from);
 
       if (from) {
-        // from is used to identify which row we are going to delete
-        // of course in production we should use id, but this is a test project
+        this.$store.dispatch("deleteDictionaryRow", { id: this.data.id, from });
       }
     },
 

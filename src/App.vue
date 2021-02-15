@@ -1,18 +1,22 @@
 <template>
-  <PageHeading />
+  <PageHeader />
 
   <DictionaryList />
+
+  <PageFooter />
 </template>
 
 <script>
+import PageHeader from "@/components/PageHeader";
 import DictionaryList from "@/components/DictionaryList";
-import PageHeading from "@/components/PageHeading";
+import PageFooter from "@/components/PageFooter";
 
 export default {
   name: "App",
 
   components: {
-    PageHeading,
+    PageFooter,
+    PageHeader,
     DictionaryList
   }
 };

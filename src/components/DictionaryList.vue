@@ -57,5 +57,6 @@ export default {
 
 .d-typography {
   text-align: center;
+  margin-bottom: var(--gap-6x);
 }
 </style>
