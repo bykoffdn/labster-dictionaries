@@ -2,7 +2,7 @@ import { createApp } from "vue";
 // UI library plugin
 import { darwinStudioUiPlugin } from "@darwin-studio/ui-vue";
 // store
-import store from "../store/";
+import store from "./store/";
 // root component
 import App from "./App.vue";
 

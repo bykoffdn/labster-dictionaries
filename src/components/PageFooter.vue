@@ -10,7 +10,7 @@
 import { mapState } from "vuex";
 
 /** static data **/
-import interfaceCopyright from "../../interface-copyright/pageFooter";
+import interfaceCopyright from "../interface-copyright/pageFooter";
 
 /** components **/
 import { DGrid, DTypography } from "@darwin-studio/ui-vue";

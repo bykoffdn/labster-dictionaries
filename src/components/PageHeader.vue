@@ -25,10 +25,10 @@
 import { mapState } from "vuex";
 
 /** static data **/
-import interfaceCopyright from "../../interface-copyright/pageHeader";
+import interfaceCopyright from "../interface-copyright/pageHeader";
 
 /** mixins **/
-import errorHandler from "../../mixins/errorHandler";
+import errorHandler from "../mixins/errorHandler";
 
 /** components **/
 import {

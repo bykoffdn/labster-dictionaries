@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import interfaceCopyright from "../../interface-copyright/dictionaryList";
+import interfaceCopyright from "../interface-copyright/dictionaryList";
 
 import { mapState } from "vuex";
 

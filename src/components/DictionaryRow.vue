@@ -52,7 +52,7 @@
 
 <script>
 /** static data **/
-import interfaceCopyright from "../../interface-copyright/dictionaryRow";
+import interfaceCopyright from "../interface-copyright/dictionaryRow";
 
 /** components **/
 import { DInput, DIconArrow, DButton } from "@darwin-studio/ui-vue";

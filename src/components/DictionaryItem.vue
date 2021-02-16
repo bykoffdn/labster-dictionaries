@@ -39,10 +39,10 @@
 
 <script>
 /** static data **/
-import interfaceCopyright from "../../interface-copyright/dictionaryItem";
+import interfaceCopyright from "../interface-copyright/dictionaryItem";
 
 /** mixins **/
-import errorHandler from "../../mixins/errorHandler";
+import errorHandler from "../mixins/errorHandler";
 
 /** components **/
 import {
@@ -133,10 +133,12 @@ export default {
     },
 
     showDeleteModalHandler(show = true) {
+      // such a critical action need to be confirmed
       this.isDeleteModalShown = show;
     },
 
     async deleteDictionaryHandler() {
+      // all consistency checks take place into the store
       try {
         await this.$store.dispatch("deleteDictionary", { id: this.data.id });
       } catch (e) {
