@@ -28,9 +28,6 @@ import { mapState } from "vuex";
 /** static data **/
 import interfaceCopyright from "../../interface-copyright/pageHeader";
 
-/** utils **/
-import { utils } from "@darwin-studio/ui-vue";
-
 /** components **/
 import {
   DGrid,
@@ -70,44 +67,32 @@ export default {
 
   methods: {
     changeNewDictionaryName(e) {
-      this.nameInputError = "";
       this.dictionaryName = e.value;
+      // reset input error when user changes dictionary name
+      this.nameInputError = "";
     },
 
-    createDictionaryHandler() {
-      if (this.dictionaryName) {
-        // TODO: each dictionary should have unique name, so need validation
-
-        const hasDuplicateName = this.dictionaryList.find(
-          dictionary => dictionary.name === this.dictionaryName
-        );
-
-        if (hasDuplicateName) {
-          this.notification = "";
-
-          this.$nextTick(() => {
-            this.notification = this.nameInputError =
-              interfaceCopyright.duplicateDictionaryNameNotification;
-          });
-
-          return;
-        }
-
-        this.$store.dispatch("createDictionary", {
-          name: this.dictionaryName,
-          // in real world we would use id from an API
-          id: utils.uuid()
+    async createDictionaryHandler() {
+      // all consistency checks take place into the store
+      try {
+        await this.$store.dispatch("createDictionary", {
+          name: this.dictionaryName
         });
-
-        this.dictionaryName = "";
-      } else {
-        this.notification = "";
-
-        this.$nextTick(() => {
-          this.notification = this.nameInputError =
-            interfaceCopyright.emptyDictionaryNameNotification;
-        });
+      } catch (e) {
+        // if there any errors it is thrown
+        this.errorHandler(e.message);
       }
+
+      // reset new dictionary name
+      this.dictionaryName = "";
+    },
+
+    errorHandler(errorMessage) {
+      this.notification = "";
+
+      this.$nextTick(() => {
+        this.notification = this.nameInputError = errorMessage;
+      });
     }
   }
 };

@@ -1,8 +1,15 @@
 import { createStore } from "vuex";
 
+/** static data **/
+import interfaceCopyright from "../interface-copyright/storeErrors";
+
+/** utils **/
+import { utils } from "@darwin-studio/ui-vue";
+
 export default createStore({
   state() {
     return {
+      lastError: "",
       dictionaryList: [
         // Expected format:
         /* {
@@ -20,7 +27,26 @@ export default createStore({
 
   mutations: {
     CREATE_DICTIONARY(state, payload = {}) {
-      state.dictionaryList.push({ ...payload, rowMap: {} });
+      // the mutation can be reached without the action, so perform consistency check here
+      if (payload.name || payload.id) {
+        const duplicateDictionary = state.dictionaryList.find(
+          dictionary => dictionary.name === payload.name
+        );
+
+        if (duplicateDictionary) {
+          // console.log(payload);
+          throw new Error(interfaceCopyright.duplicateDictionaryName);
+        }
+
+        // create new dictionary
+        state.dictionaryList.push({ ...payload, rowMap: {} });
+      } else if (payload.name) {
+        // console.log(payload);
+        throw new Error(interfaceCopyright.emptyDictionaryName);
+      } else if (payload.id) {
+        // console.log(payload);
+        throw new Error(interfaceCopyright.emptyDictionaryId);
+      }
     },
 
     CREATE_DICTIONARY_ROW(state, payload = {}) {
@@ -95,16 +121,17 @@ export default createStore({
   },
 
   actions: {
-    createDictionary({ commit }, payload = {}) {
-      if (payload.id && payload.name) {
-        // any dictionary should have id and name
-        commit("CREATE_DICTIONARY", payload);
-      } else {
-        console.warn(
-          "Can't create dictionary without 'id' or 'name', payload:",
-          payload
-        );
-      }
+    /* async */ createDictionary({ commit }, payload = {}) {
+      // any dictionary should have an id and a name
+      // name is given by user, id we should get from backend API
+      // /* await */ TODO: push new dictionary to the API here
+      // server response should contain new dictionary id, mock it using uuid()
+      const serverResponse = { id: utils.uuid() };
+
+      commit("CREATE_DICTIONARY", {
+        ...payload,
+        ...serverResponse
+      });
     },
 
     createDictionaryRow({ commit }, payload = {}) {

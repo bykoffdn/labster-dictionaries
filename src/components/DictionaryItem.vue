@@ -160,7 +160,6 @@ export default {
 @import "~@darwin-studio/ui-vue/src/assets/styles/tokens/gaps";
 @import "~@darwin-studio/ui-vue/src/assets/styles/tokens/colors";
 @import "~@darwin-studio/ui-vue/src/assets/styles/mixins/shadows";
-@import "~@darwin-studio/ui-vue/src/assets/styles/transitions/opacity";
 
 .dictionary-item {
   @include shadow-medium;

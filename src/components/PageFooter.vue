@@ -1,6 +1,7 @@
 <template>
   <DGrid tag="footer">
     <DTypography :content="interfaceCopyright.heading" size="h3" />
+
     <pre>{{ dictionaryList }}</pre>
   </DGrid>
 </template>
