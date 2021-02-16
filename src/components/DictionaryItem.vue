@@ -3,8 +3,20 @@
     <DTypography :content="data.name" size="h5" class="heading" />
 
     <DButton
+      type="alternative"
+      :icon-only="true"
+      :title="interfaceCopyright.validateDictionaryBtnTitle"
+      size="medium"
+      class="button-validate"
+      @click="validateDictionaryHandler"
+    >
+      <IconSearch />
+    </DButton>
+
+    <DButton
       type="danger"
       :icon-only="true"
+      :title="interfaceCopyright.deleteDictionaryBtnTitle"
       size="medium"
       class="button-delete"
       @click="showDeleteModalHandler"
@@ -42,7 +54,7 @@
 import interfaceCopyright from "../interface-copyright/dictionaryItem";
 
 /** mixins **/
-import errorHandler from "../mixins/errorHandler";
+import notificationHandler from "../mixins/notificationHandler";
 
 /** components **/
 import {
@@ -54,6 +66,7 @@ import {
 
 import DictionaryRow from "@/components/DictionaryRow";
 import IconTrash from "@/components/IconTrash";
+import IconSearch from "@/components/IconSearch";
 
 /**
  * @version 1.0.0
@@ -63,6 +76,7 @@ export default {
   name: "DictionaryItem",
 
   components: {
+    IconSearch,
     IconTrash,
     DictionaryRow,
     DTypography,
@@ -71,7 +85,7 @@ export default {
     DModal
   },
 
-  mixins: [errorHandler],
+  mixins: [notificationHandler],
 
   props: {
     data: {
@@ -98,7 +112,7 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.errorHandler(e.message);
+        this.notificationHandler(e.message);
       }
     },
 
@@ -115,7 +129,7 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.errorHandler(e.message);
+        this.notificationHandler(e.message);
       }
     },
 
@@ -128,8 +142,36 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.errorHandler(e.message);
+        this.notificationHandler(e.message);
       }
+    },
+
+    validateDictionaryHandler() {
+      // we don't actually need this function,
+      // because store setup itself doesn't allow inconsistent data
+
+      // to emulate possibility of clones and forks turn rowMap object to an array
+      const rowList = Object.entries(this.data.rowMap).map(([key, value]) => {
+        return { from: key, to: value };
+      });
+
+      // both clones and forks check
+      if (this.hasDuplicateFrom(rowList)) {
+        this.notificationHandler(interfaceCopyright.validationCheckError);
+      } else {
+        this.notificationHandler(interfaceCopyright.validationCheckOk);
+      }
+    },
+
+    hasDuplicateFrom(array) {
+      // is there the same 'from' values
+      // it satisfies both requirements (clone and fork)
+      let seenFrom = new Set();
+      return array.some(row => {
+        // as soon as we find duplicate 'from'
+        // the equation below will be true
+        return seenFrom.size === seenFrom.add(row.from).size;
+      });
     },
 
     showDeleteModalHandler(show = true) {
@@ -143,7 +185,7 @@ export default {
         await this.$store.dispatch("deleteDictionary", { id: this.data.id });
       } catch (e) {
         // if there any errors it is thrown
-        this.errorHandler(e.message);
+        this.notificationHandler(e.message);
       }
     }
   }
@@ -165,7 +207,8 @@ export default {
   position: relative;
 
   &:hover {
-    .button-delete {
+    .button-delete,
+    .button-validate {
       visibility: visible;
       opacity: 1;
     }
@@ -178,12 +221,20 @@ export default {
   text-align: center;
 }
 
-.button-delete {
+.button-delete,
+.button-validate {
   position: absolute;
   top: calc(-1 * var(--gap-4x));
-  right: calc(-1 * var(--gap-4x));
   visibility: hidden;
   opacity: 0;
   transition: opacity 150ms ease;
+}
+
+.button-delete {
+  right: calc(-1 * var(--gap-4x));
+}
+
+.button-validate {
+  left: calc(-1 * var(--gap-4x));
 }
 </style>

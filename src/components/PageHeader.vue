@@ -28,7 +28,7 @@ import { mapState } from "vuex";
 import interfaceCopyright from "../interface-copyright/pageHeader";
 
 /** mixins **/
-import errorHandler from "../mixins/errorHandler";
+import notificationHandler from "../mixins/notificationHandler";
 
 /** components **/
 import {
@@ -54,12 +54,12 @@ export default {
     DNotification
   },
 
-  mixins: [errorHandler],
+  mixins: [notificationHandler],
 
   data() {
     return {
       interfaceCopyright,
-      dictionaryName: "",
+      dictionaryName: ""
     };
   },
 
@@ -80,7 +80,7 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.errorHandler(e.message);
+        this.notificationHandler(e.message);
       }
 
       // reset new dictionary name

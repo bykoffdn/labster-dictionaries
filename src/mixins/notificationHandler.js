@@ -6,11 +6,11 @@ export default {
   },
 
   methods: {
-    errorHandler(errorMessage) {
+    notificationHandler(message) {
       this.notification = "";
 
       this.$nextTick(() => {
-        this.notification = errorMessage;
+        this.notification = message;
       });
     }
   }

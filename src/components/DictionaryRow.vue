@@ -27,8 +27,12 @@
             : true
         "
         :icon-only="true"
+        :title="
+          createMode
+            ? interfaceCopyright.createDictionaryRowBtnTitle
+            : interfaceCopyright.updateDictionaryRowBtnTitle
+        "
         size="medium"
-        roundness="boxed"
         @click="updateRowHandler"
       >
         <IconPlusMinus v-if="createMode" />
@@ -39,8 +43,8 @@
         v-if="!createMode"
         type="danger"
         :icon-only="true"
+        :title="interfaceCopyright.deleteDictionaryRowBtnTitle"
         size="medium"
-        roundness="boxed"
         class="button-delete"
         @click="deleteRowHandler"
       >

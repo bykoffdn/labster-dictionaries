@@ -2,5 +2,8 @@ export default {
   addRowBtnText: "Add",
   updateRowBtnText: "Upd",
   fromPlaceholder: "From",
-  toPlaceholder: "To"
+  toPlaceholder: "To",
+  createDictionaryRowBtnTitle: "Create row",
+  updateDictionaryRowBtnTitle: "Update row",
+  deleteDictionaryRowBtnTitle: "Delete row"
 };
