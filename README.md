@@ -1,4 +1,4 @@
-# labster-dictionary
+# Labster dictionaries
 
 ## Project setup
 ```

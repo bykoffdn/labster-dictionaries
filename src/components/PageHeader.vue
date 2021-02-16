@@ -5,7 +5,6 @@
     <div class="new-dictionary-container">
       <DInput
         :value="dictionaryName"
-        :error="nameInputError"
         :placeholder="interfaceCopyright.dictionaryNamePlaceholder"
         @update:value="changeNewDictionaryName"
       />
@@ -27,6 +26,9 @@ import { mapState } from "vuex";
 
 /** static data **/
 import interfaceCopyright from "../../interface-copyright/pageHeader";
+
+/** mixins **/
+import errorHandler from "../../mixins/errorHandler";
 
 /** components **/
 import {
@@ -52,12 +54,12 @@ export default {
     DNotification
   },
 
+  mixins: [errorHandler],
+
   data() {
     return {
       interfaceCopyright,
       dictionaryName: "",
-      notification: "",
-      nameInputError: ""
     };
   },
 
@@ -68,8 +70,6 @@ export default {
   methods: {
     changeNewDictionaryName(e) {
       this.dictionaryName = e.value;
-      // reset input error when user changes dictionary name
-      this.nameInputError = "";
     },
 
     async createDictionaryHandler() {
@@ -85,14 +85,6 @@ export default {
 
       // reset new dictionary name
       this.dictionaryName = "";
-    },
-
-    errorHandler(errorMessage) {
-      this.notification = "";
-
-      this.$nextTick(() => {
-        this.notification = this.nameInputError = errorMessage;
-      });
     }
   }
 };

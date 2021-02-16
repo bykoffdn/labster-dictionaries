@@ -21,7 +21,7 @@
       @delete-row="deleteRowHandler"
     />
 
-    <DictionaryRow :create-mode="true" @update-row="addRowHandler" />
+    <DictionaryRow :create-mode="true" @update-row="createRowHandler" />
   </div>
 
   <DNotification :content="notification" />
@@ -40,6 +40,9 @@
 <script>
 /** static data **/
 import interfaceCopyright from "../../interface-copyright/dictionaryItem";
+
+/** mixins **/
+import errorHandler from "../../mixins/errorHandler";
 
 /** components **/
 import {
@@ -68,6 +71,8 @@ export default {
     DModal
   },
 
+  mixins: [errorHandler],
+
   props: {
     data: {
       type: Object,
@@ -78,70 +83,52 @@ export default {
   data() {
     return {
       interfaceCopyright,
-      notification: "",
       isDeleteModalShown: false
     };
   },
 
   methods: {
-    addRowHandler({ from, to }) {
-      if (from && to) {
-        // check for duplicates
-        // TODO: move all checks to store ???
-        const duplicateRow =
-          this.data && this.data.rowMap && this.data.rowMap[from];
-
-        if (duplicateRow) {
-          this.notification = "";
-
-          this.$nextTick(() => {
-            this.notification = interfaceCopyright.duplicateRowDataNotification;
-          });
-
-          return;
-        }
-
-        // insert new row
-        this.$store.dispatch("createDictionaryRow", {
+    async createRowHandler({ from, to }) {
+      // all consistency checks take place into the store
+      try {
+        await this.$store.dispatch("createDictionaryRow", {
           id: this.data.id,
           from,
           to
         });
-      } else {
-        this.notification = "";
-
-        this.$nextTick(() => {
-          this.notification = interfaceCopyright.invalidRowDataNotification;
-        });
+      } catch (e) {
+        // if there any errors it is thrown
+        this.errorHandler(e.message);
       }
     },
 
-    updateRowHandler({ prevFrom, from, to }) {
-      console.log("updateRowHandler", prevFrom, from, to);
-
-      if (prevFrom && from && to) {
+    async updateRowHandler({ prevFrom, from, to }) {
+      // all consistency checks take place into the store
+      try {
         // prevFrom is used to identify which row we are going to update
         // of course in production we should use id, but this is a test project
-        this.$store.dispatch("updateDictionaryRow", {
+        await this.$store.dispatch("updateDictionaryRow", {
           id: this.data.id,
           prevFrom,
           from,
           to
         });
-      } else {
-        this.notification = "";
-
-        this.$nextTick(() => {
-          this.notification = interfaceCopyright.invalidRowDataNotification;
-        });
+      } catch (e) {
+        // if there any errors it is thrown
+        this.errorHandler(e.message);
       }
     },
 
-    deleteRowHandler({ from }) {
-      console.log("deleteRowHandler", from);
-
-      if (from) {
-        this.$store.dispatch("deleteDictionaryRow", { id: this.data.id, from });
+    async deleteRowHandler({ from }) {
+      // all consistency checks take place into the store
+      try {
+        await this.$store.dispatch("deleteDictionaryRow", {
+          id: this.data.id,
+          from
+        });
+      } catch (e) {
+        // if there any errors it is thrown
+        this.errorHandler(e.message);
       }
     },
 
@@ -149,8 +136,13 @@ export default {
       this.isDeleteModalShown = show;
     },
 
-    deleteDictionaryHandler() {
-      this.$store.dispatch("deleteDictionary", { id: this.data.id });
+    async deleteDictionaryHandler() {
+      try {
+        await this.$store.dispatch("deleteDictionary", { id: this.data.id });
+      } catch (e) {
+        // if there any errors it is thrown
+        this.errorHandler(e.message);
+      }
     }
   }
 };
