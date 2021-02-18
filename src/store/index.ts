@@ -151,7 +151,10 @@ export default createStore({
       commit("CREATE_DICTIONARY_ROW", payload);
     },
 
-    /* async */ updateDictionaryRow({ commit, state }, payload = {}) {
+    /* async */ updateDictionaryRow(
+      { commit, state },
+      payload: DictionaryRowPayload
+    ) {
       // here we also need to do API request but omit this for simplicity
       checkDictionaryRowDataConsistency(state, payload, true);
       // /* await */ TODO: push new data to the API here
@@ -161,7 +164,7 @@ export default createStore({
 
     /* async */ deleteDictionaryRow({ commit }, payload: DictionaryRowPayload) {
       // here we also need to do API request but omit this for simplicity
-      if (payload.id && payload.from && payload.to) {
+      if (payload.id && payload.from) {
         // use 'id' and 'from' to identify row
         // /* await */ TODO: push new data to the API here
         commit("DELETE_DICTIONARY_ROW", payload);
@@ -172,7 +175,7 @@ export default createStore({
       }
     },
 
-    /* async */ deleteDictionary({ commit }, payload = {}) {
+    /* async */ deleteDictionary({ commit }, payload: { id: string }) {
       // here we also need to do API request but omit this for simplicity
       if (payload.id) {
         // /* await */ TODO: push new data to the API here
@@ -206,7 +209,7 @@ const checkDictionaryNameConsistency = (
 
 const checkDictionaryRowDataConsistency = (
   state: DictionaryListState,
-  payload: { id: string; from: string; to: string; prevFrom?: string },
+  payload: DictionaryRowPayload,
   excludeItself: boolean = false // from duplicate check
 ) => {
   if (!payload.id || !payload.from || !payload.to) {
@@ -214,7 +217,7 @@ const checkDictionaryRowDataConsistency = (
   } else {
     const dictionaryIndex = getDictionaryIndexById(state, payload.id);
 
-    if (typeof dictionaryIndex !== "number") {
+    if (dictionaryIndex !== -1) {
       throw new Error(interfaceCopyright.invalidDictionaryId);
     }
 
@@ -235,16 +238,20 @@ const checkDictionaryRowDataConsistency = (
   }
 };
 
-const getDictionaryIndexById = (state: DictionaryListState, id: string) => {
-  return state.dictionaryList.findIndex(dictionary => dictionary.id === id);
+const getDictionaryIndexById = (state: DictionaryListState, id?: string) => {
+  if (id) {
+    return state.dictionaryList.findIndex(dictionary => dictionary.id === id);
+  } else {
+    return -1;
+  }
 };
 
 const getDictionaryRowToByRowFrom = (
   state: DictionaryListState,
-  id: string,
+  id?: string,
   from?: string
 ) => {
-  if (from) {
+  if (id && from) {
     const dictionaryIndex = getDictionaryIndexById(state, id);
 
     return state.dictionaryList[dictionaryIndex].rowMap[from];

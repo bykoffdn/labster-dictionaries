@@ -50,7 +50,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+
+/** types **/
+import Dictionary from "@/models/Dictionary";
+import DictionaryRowPayload from "@/models/DictionaryRowPayload";
 
 /** static data **/
 import interfaceCopyright from "@/interface-copyright/dictionaryItem";
@@ -67,9 +71,9 @@ import {
   // @ts-ignore
 } from "@darwin-studio/ui-vue";
 
-import DictionaryRow from "@/components/DictionaryRow";
-import IconTrash from "@/components/icons/Trash";
-import IconSearch from "@/components/icons/Search";
+import DictionaryRow from "@/components/DictionaryRow.vue";
+import IconTrash from "@/components/icons/Trash.vue";
+import IconSearch from "@/components/icons/Search.vue";
 
 /**
  * @version 1.0.0
@@ -92,8 +96,8 @@ export default defineComponent({
 
   props: {
     data: {
-      type: Object,
-      default: () => {}
+      type: Object as PropType<Dictionary>,
+      required: true
     }
   },
 
@@ -105,13 +109,12 @@ export default defineComponent({
   },
 
   methods: {
-    async createRowHandler({ from, to }) {
+    async createRowHandler(payload: DictionaryRowPayload) {
       // all consistency checks take place into the store
       try {
         await this.$store.dispatch("createDictionaryRow", {
           id: this.data.id,
-          from,
-          to
+          ...payload
         });
       } catch (e) {
         // if there any errors it is thrown
@@ -119,16 +122,14 @@ export default defineComponent({
       }
     },
 
-    async updateRowHandler({ prevFrom, from, to }) {
+    async updateRowHandler(payload: DictionaryRowPayload) {
       // all consistency checks take place into the store
       try {
         // prevFrom is used to identify which row we are going to update
         // of course in production we should use id, but this is a test project
         await this.$store.dispatch("updateDictionaryRow", {
           id: this.data.id,
-          prevFrom,
-          from,
-          to
+          ...payload
         });
       } catch (e) {
         // if there any errors it is thrown
@@ -136,12 +137,12 @@ export default defineComponent({
       }
     },
 
-    async deleteRowHandler({ from }) {
+    async deleteRowHandler(payload: { from: string }) {
       // all consistency checks take place into the store
       try {
         await this.$store.dispatch("deleteDictionaryRow", {
           id: this.data.id,
-          from
+          ...payload
         });
       } catch (e) {
         // if there any errors it is thrown
@@ -166,7 +167,7 @@ export default defineComponent({
       }
     },
 
-    hasDuplicateFrom(array: array) {
+    hasDuplicateFrom(array: { from: string }[]) {
       // is there the same 'from' values
       // it satisfies both requirements (clone and fork)
       let seenFrom = new Set();

@@ -1,7 +1,10 @@
-import { Store } from '@/store';// path to store file
+import { ComponentCustomProperties } from "vue";
+import { Store } from "vuex";
 
-declare module '@vue/runtime-core' {
+import DictionaryListState from "@/models/DictionaryListState";
+
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $store: Store;
+    $store: Store<DictionaryListState>;
   }
 }

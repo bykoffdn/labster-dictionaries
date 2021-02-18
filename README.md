@@ -1,6 +1,6 @@
 # Labster dictionaries
 
-This is a test project which is using Vue 3 and Vuex 4.
+Test project which is using Vue 3, Vuex 4 and typescript.
 
 Project task is [described here](https://docs.google.com/document/d/1NdnehdefmS4oy7a2xEVkYkVp_Ke2de4U).
 

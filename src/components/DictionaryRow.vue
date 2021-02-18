@@ -22,9 +22,7 @@
       <DButton
         :type="createMode ? 'primary' : 'alternative'"
         :disabled="
-          innerFrom && innerTo && (from !== innerFrom || to !== innerTo)
-            ? undefined
-            : true
+          !(innerFrom && innerTo && (from !== innerFrom || to !== innerTo))
         "
         :icon-only="true"
         :title="
@@ -56,14 +54,15 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 /** static data **/
 import interfaceCopyright from "@/interface-copyright/dictionaryRow";
 
 /** components **/
 // @ts-ignore
 import { DInput, DIconArrow, DButton } from "@darwin-studio/ui-vue";
-import IconPlusMinus from "@/components/icons/PlusMinus";
-import IconRefresh from "@/components/icons/Refresh";
+import IconPlusMinus from "@/components/icons/PlusMinus.vue";
+import IconRefresh from "@/components/icons/Refresh.vue";
 
 /**
  * @version 1.0.0
@@ -82,6 +81,7 @@ export default defineComponent({
 
   props: {
     from: {
+      // We don't really need in TS here, so just use Vue's prop type
       type: String,
       default: ""
     },
@@ -106,11 +106,11 @@ export default defineComponent({
   },
 
   methods: {
-    changeNewRowFrom(e) {
+    changeNewRowFrom(e: { value: string }) {
       this.innerFrom = e.value;
     },
 
-    changeNewRowTo(e) {
+    changeNewRowTo(e: { value: string }) {
       this.innerTo = e.value;
     },
 

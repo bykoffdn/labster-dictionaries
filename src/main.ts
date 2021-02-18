@@ -3,7 +3,7 @@ import { createApp } from "vue";
 // @ts-ignore
 import { darwinStudioUiPlugin } from "@darwin-studio/ui-vue";
 // store
-import store from "./store/";
+import store from "./store/index";
 // root component
 import App from "./App.vue";
 

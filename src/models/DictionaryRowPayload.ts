@@ -1,5 +1,5 @@
 export default interface DictionaryRowPayload {
-  id: string;
+  id?: string;
   from: string;
   to: string;
   prevFrom?: string;

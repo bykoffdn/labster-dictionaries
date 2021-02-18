@@ -23,7 +23,7 @@ import interfaceCopyright from "@/interface-copyright/dictionaryList";
 /** components **/
 // @ts-ignore
 import { DGrid, DTypography } from "@darwin-studio/ui-vue";
-import DictionaryItem from "@/components/DictionaryItem";
+import DictionaryItem from "@/components/DictionaryItem.vue";
 
 /**
  * @version 1.0.0

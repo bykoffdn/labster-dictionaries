@@ -9,10 +9,7 @@
         @update:value="changeNewDictionaryName"
       />
 
-      <DButton
-        :disabled="!dictionaryName ? true : undefined"
-        @click="createDictionaryHandler"
-      >
+      <DButton :disabled="!dictionaryName" @click="createDictionaryHandler">
         {{ interfaceCopyright.createDictionaryBtnText }}
       </DButton>
     </div>
