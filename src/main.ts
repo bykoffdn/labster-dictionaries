@@ -6,16 +6,17 @@ import { darwinStudioUiPlugin } from "@darwin-studio/ui-vue";
 import store from "./store/";
 // root component
 import App from "./App.vue";
+
 const darwinUiPluginOptions = {
-    resetStyles: true,
-    googleFonts: [
-        {
-            family: "Montserrat"
-        }
-    ]
+  resetStyles: true,
+  googleFonts: [
+    {
+      family: "Montserrat"
+    }
+  ]
 };
+
 createApp(App)
-    .use(darwinStudioUiPlugin, darwinUiPluginOptions)
-    .use(store)
-    .mount("#app");
-//# sourceMappingURL=main.js.map
+  .use(darwinStudioUiPlugin, darwinUiPluginOptions)
+  .use(store)
+  .mount("#app");
