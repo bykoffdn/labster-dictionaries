@@ -45,7 +45,7 @@ export default createStore({
 
       const dictionaryIndex = getDictionaryIndexById(state, payload.id);
 
-      if (typeof dictionaryIndex === "number") {
+      if (dictionaryIndex !== -1) {
         state.dictionaryList[dictionaryIndex].rowMap[payload.from] = payload.to;
       } else {
         throw new Error(interfaceCopyright.invalidDictionaryId);
@@ -58,7 +58,7 @@ export default createStore({
 
       const dictionaryIndex = getDictionaryIndexById(state, payload.id);
 
-      if (typeof dictionaryIndex === "number") {
+      if (dictionaryIndex !== -1) {
         // find out if there row with with 'prevFrom'
         const prevRowTo = getDictionaryRowToByRowFrom(
           state,
@@ -203,7 +203,7 @@ const checkDictionaryRowDataConsistency = (
   } else {
     const dictionaryIndex = getDictionaryIndexById(state, payload.id);
 
-    if (typeof dictionaryIndex !== "number") {
+    if (dictionaryIndex === -1) {
       throw new Error(interfaceCopyright.invalidDictionaryId);
     }
 

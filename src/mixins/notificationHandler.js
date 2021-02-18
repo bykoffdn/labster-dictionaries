@@ -6,10 +6,10 @@ export default {
   },
 
   methods: {
-    notificationHandler(message) {
+    async notificationHandler(message) {
       this.notification = "";
 
-      this.$nextTick(() => {
+      await this.$nextTick(() => {
         this.notification = message;
       });
     }

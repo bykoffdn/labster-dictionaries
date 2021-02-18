@@ -65,8 +65,8 @@ import {
 } from "@darwin-studio/ui-vue";
 
 import DictionaryRow from "@/components/DictionaryRow";
-import IconTrash from "@/components/IconTrash";
-import IconSearch from "@/components/IconSearch";
+import IconTrash from "@/components/icons/Trash";
+import IconSearch from "@/components/icons/Search";
 
 /**
  * @version 1.0.0

@@ -60,8 +60,8 @@ import interfaceCopyright from "../interface-copyright/dictionaryRow";
 
 /** components **/
 import { DInput, DIconArrow, DButton } from "@darwin-studio/ui-vue";
-import IconPlusMinus from "@/components/IconPlusMinus";
-import IconRefresh from "@/components/IconRefresh";
+import IconPlusMinus from "@/components/icons/PlusMinus";
+import IconRefresh from "@/components/icons/Refresh";
 
 /**
  * @version 1.0.0
