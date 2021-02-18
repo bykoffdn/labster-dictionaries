@@ -1,16 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <PageHeader />
+
+  <DictionaryList />
+
+  <PageFooter />
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent } from "vue";
 
-@Options({
+import PageHeader from "@/components/PageHeader.vue";
+import DictionaryList from "@/components/DictionaryList.vue";
+import PageFooter from "@/components/PageFooter.vue";
+
+export default defineComponent({
+  name: "App",
+
   components: {
-    HelloWorld,
-  },
-})
-export default class App extends Vue {}
+    PageFooter,
+    PageHeader,
+    DictionaryList
+  }
+});
 </script>
+
+<style lang="scss">
+:root {
+  --font-family: "Montserrat";
+}
+</style>
+
+<style scoped lang="scss">
+@import "~@darwin-studio/ui-vue/src/assets/styles/tokens/gaps";
+
+.dictionary-list {
+  margin-top: var(--gap-12x);
+}
+</style>

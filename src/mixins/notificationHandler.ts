@@ -3,7 +3,7 @@ import { defineComponent, nextTick } from "vue";
 export default defineComponent({
   data() {
     return {
-      notification: "" as string
+      notification: ""
     };
   },
 

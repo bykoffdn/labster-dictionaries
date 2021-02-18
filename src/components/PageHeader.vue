@@ -21,7 +21,8 @@
   <DNotification :content="notification" />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
 /** static data **/
@@ -37,13 +38,14 @@ import {
   DInput,
   DButton,
   DNotification
+  // @ts-ignore
 } from "@darwin-studio/ui-vue";
 
 /**
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */
-export default {
+export default defineComponent({
   name: "PageHeading",
 
   components: {
@@ -68,7 +70,7 @@ export default {
   },
 
   methods: {
-    changeNewDictionaryName(e) {
+    changeNewDictionaryName(e: { value: string }) {
       this.dictionaryName = e.value;
     },
 
@@ -80,14 +82,14 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.notificationHandler(e.message);
+        await this.notificationHandler(e.message);
       }
 
       // reset new dictionary name
       this.dictionaryName = "";
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

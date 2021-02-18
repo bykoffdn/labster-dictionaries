@@ -14,12 +14,14 @@
   </DGrid>
 </template>
 
-<script>
-import interfaceCopyright from "../interface-copyright/dictionaryList";
-
+<script lang="ts">
+import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
+import interfaceCopyright from "../interface-copyright/dictionaryList";
+
 /** components **/
+
 import { DGrid, DTypography } from "@darwin-studio/ui-vue";
 import DictionaryItem from "@/components/DictionaryItem";
 
@@ -27,7 +29,7 @@ import DictionaryItem from "@/components/DictionaryItem";
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */
-export default {
+export default defineComponent({
   name: "DictionaryList",
 
   components: {
@@ -45,7 +47,7 @@ export default {
   computed: {
     ...mapState(["dictionaryList"])
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
