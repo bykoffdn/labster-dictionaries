@@ -50,10 +50,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 /** types **/
-import Dictionary from "@/models/Dictionary";
+// import Dictionary from "@/models/Dictionary";
 import DictionaryRowPayload from "@/models/DictionaryRowPayload";
 
 /** static data **/
@@ -96,7 +96,9 @@ export default defineComponent({
 
   props: {
     data: {
-      type: Object as PropType<Dictionary>,
+      // doesn't work
+      // type: Object as PropType<Dictionary>,
+      type: Object,
       required: true
     }
   },

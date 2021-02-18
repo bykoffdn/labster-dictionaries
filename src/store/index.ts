@@ -147,7 +147,6 @@ export default createStore({
       // here we also need to do API request but omit this for simplicity
       checkDictionaryRowDataConsistency(state, payload);
       // /* await */ TODO: push new data to the API here
-
       commit("CREATE_DICTIONARY_ROW", payload);
     },
 
@@ -217,7 +216,7 @@ const checkDictionaryRowDataConsistency = (
   } else {
     const dictionaryIndex = getDictionaryIndexById(state, payload.id);
 
-    if (dictionaryIndex !== -1) {
+    if (dictionaryIndex === -1) {
       throw new Error(interfaceCopyright.invalidDictionaryId);
     }
 
