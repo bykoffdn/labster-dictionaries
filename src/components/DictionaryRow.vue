@@ -54,20 +54,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 /** static data **/
-import interfaceCopyright from "../interface-copyright/dictionaryRow";
+import interfaceCopyright from "@/interface-copyright/dictionaryRow";
 
 /** components **/
+// @ts-ignore
 import { DInput, DIconArrow, DButton } from "@darwin-studio/ui-vue";
-import IconPlusMinus from "@/components/IconPlusMinus";
-import IconRefresh from "@/components/IconRefresh";
+import IconPlusMinus from "@/components/icons/PlusMinus";
+import IconRefresh from "@/components/icons/Refresh";
 
 /**
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */
-export default {
+export default defineComponent({
   name: "DictionaryRow",
 
   components: {
@@ -131,7 +133,7 @@ export default {
       });
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

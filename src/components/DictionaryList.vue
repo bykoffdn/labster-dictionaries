@@ -18,10 +18,10 @@
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
-import interfaceCopyright from "../interface-copyright/dictionaryList";
+import interfaceCopyright from "@/interface-copyright/dictionaryList";
 
 /** components **/
-
+// @ts-ignore
 import { DGrid, DTypography } from "@darwin-studio/ui-vue";
 import DictionaryItem from "@/components/DictionaryItem";
 

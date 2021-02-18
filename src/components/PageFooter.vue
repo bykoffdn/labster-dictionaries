@@ -6,20 +6,22 @@
   </DGrid>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
 /** static data **/
-import interfaceCopyright from "../interface-copyright/pageFooter";
+import interfaceCopyright from "@/interface-copyright/pageFooter";
 
 /** components **/
+// @ts-ignore
 import { DGrid, DTypography } from "@darwin-studio/ui-vue";
 
 /**
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */
-export default {
+export default defineComponent({
   name: "PageFooter",
 
   components: {
@@ -36,7 +38,7 @@ export default {
   computed: {
     ...mapState(["dictionaryList"])
   }
-};
+});
 </script>
 
 <style scoped lang="scss">

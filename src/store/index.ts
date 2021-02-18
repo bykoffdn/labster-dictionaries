@@ -5,7 +5,7 @@ import DictionaryListState from "@/models/DictionaryListState";
 import DictionaryRowPayload from "@/models/DictionaryRowPayload";
 
 /** static data **/
-import interfaceCopyright from "../interface-copyright/storeErrors";
+import interfaceCopyright from "@/interface-copyright/storeErrors";
 
 /** utils **/
 // @ts-ignore

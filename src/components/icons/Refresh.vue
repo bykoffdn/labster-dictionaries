@@ -30,8 +30,6 @@
 
 <script>
 /**
- * Компонент содержит svg-код.
- *
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */

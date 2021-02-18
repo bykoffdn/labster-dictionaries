@@ -7,8 +7,6 @@
 
 <script>
 /**
- * Анимированный компонент содержит html-код.<br>
- *
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */
@@ -16,9 +14,6 @@ export default {
   name: "IconPlusMinus",
 
   props: {
-    /**
-     * Определяет состояние компонента.
-     */
     isMinus: {
       type: Boolean,
       default: false

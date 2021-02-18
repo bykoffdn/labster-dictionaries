@@ -26,10 +26,10 @@ import { defineComponent } from "vue";
 import { mapState } from "vuex";
 
 /** static data **/
-import interfaceCopyright from "../interface-copyright/pageHeader";
+import interfaceCopyright from "@/interface-copyright/pageHeader";
 
 /** mixins **/
-import notificationHandler from "../mixins/notificationHandler";
+import notificationHandler from "@/mixins/notificationHandler";
 
 /** components **/
 import {

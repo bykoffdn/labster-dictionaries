@@ -49,12 +49,14 @@
   />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
 /** static data **/
-import interfaceCopyright from "../interface-copyright/dictionaryItem";
+import interfaceCopyright from "@/interface-copyright/dictionaryItem";
 
 /** mixins **/
-import notificationHandler from "../mixins/notificationHandler";
+import notificationHandler from "@/mixins/notificationHandler";
 
 /** components **/
 import {
@@ -62,17 +64,18 @@ import {
   DButton,
   DNotification,
   DModal
+  // @ts-ignore
 } from "@darwin-studio/ui-vue";
 
 import DictionaryRow from "@/components/DictionaryRow";
-import IconTrash from "@/components/IconTrash";
-import IconSearch from "@/components/IconSearch";
+import IconTrash from "@/components/icons/Trash";
+import IconSearch from "@/components/icons/Search";
 
 /**
  * @version 1.0.0
  * @author [Dmitriy Bykov] (https://github.com/d-darwin)
  */
-export default {
+export default defineComponent({
   name: "DictionaryItem",
 
   components: {
@@ -112,7 +115,7 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.notificationHandler(e.message);
+        await this.notificationHandler(e.message);
       }
     },
 
@@ -129,7 +132,7 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.notificationHandler(e.message);
+        await this.notificationHandler(e.message);
       }
     },
 
@@ -142,7 +145,7 @@ export default {
         });
       } catch (e) {
         // if there any errors it is thrown
-        this.notificationHandler(e.message);
+        await this.notificationHandler(e.message);
       }
     },
 
@@ -163,7 +166,7 @@ export default {
       }
     },
 
-    hasDuplicateFrom(array) {
+    hasDuplicateFrom(array: array) {
       // is there the same 'from' values
       // it satisfies both requirements (clone and fork)
       let seenFrom = new Set();
@@ -174,7 +177,7 @@ export default {
       });
     },
 
-    showDeleteModalHandler(show = true) {
+    showDeleteModalHandler(show: boolean = true) {
       // such a critical action need to be confirmed
       this.isDeleteModalShown = show;
     },
@@ -185,11 +188,11 @@ export default {
         await this.$store.dispatch("deleteDictionary", { id: this.data.id });
       } catch (e) {
         // if there any errors it is thrown
-        this.notificationHandler(e.message);
+        await this.notificationHandler(e.message);
       }
     }
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
