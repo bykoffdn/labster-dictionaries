@@ -1,11 +1,12 @@
 import { createStore } from "vuex";
 
 /** types **/
-import DictionaryListState from "@/models/DictionaryListState";
-import DictionaryRowPayload from "@/models/DictionaryRowPayload";
+import Dictionary from "@/models/Dictionary.ts";
+import DictionaryListState from "@/models/DictionaryListState.ts";
+import DictionaryRowPayload from "@/models/DictionaryRowPayload.ts";
 
 /** static data **/
-import interfaceCopyright from "@/interface-copyright/storeErrors";
+import interfaceCopyright from "@/interface-copyright/storeErrors.ts";
 
 /** utils **/
 // @ts-ignore
@@ -191,10 +192,10 @@ export default createStore({
 const checkDictionaryNameConsistency = (
   state: DictionaryListState,
   name: string
-) => {
+): void => {
   if (name) {
     const duplicateDictionary = state.dictionaryList.find(
-      dictionary => dictionary.name === name
+      (dictionary: Dictionary) => dictionary.name === name
     );
 
     if (duplicateDictionary) {
@@ -210,7 +211,7 @@ const checkDictionaryRowDataConsistency = (
   state: DictionaryListState,
   payload: DictionaryRowPayload,
   excludeItself: boolean = false // from duplicate check
-) => {
+): void => {
   if (!payload.id || !payload.from || !payload.to) {
     throw new Error(interfaceCopyright.invalidRowData);
   } else {
@@ -237,9 +238,14 @@ const checkDictionaryRowDataConsistency = (
   }
 };
 
-const getDictionaryIndexById = (state: DictionaryListState, id?: string) => {
+const getDictionaryIndexById = (
+  state: DictionaryListState,
+  id?: string
+): number => {
   if (id) {
-    return state.dictionaryList.findIndex(dictionary => dictionary.id === id);
+    return state.dictionaryList.findIndex(
+      (dictionary: Dictionary) => dictionary.id === id
+    );
   } else {
     return -1;
   }
@@ -249,7 +255,7 @@ const getDictionaryRowToByRowFrom = (
   state: DictionaryListState,
   id?: string,
   from?: string
-) => {
+): string | null => {
   if (id && from) {
     const dictionaryIndex = getDictionaryIndexById(state, id);
 

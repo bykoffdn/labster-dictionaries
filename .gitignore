@@ -21,3 +21,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# compiled *.js and *.js.map
+/src/**/*.js
+/src/**/*.js.map
