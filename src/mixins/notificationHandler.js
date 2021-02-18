@@ -1,16 +1,17 @@
-export default {
+import { defineComponent, nextTick } from "vue";
+export default defineComponent({
     data() {
         return {
             notification: ""
         };
     },
     methods: {
-        notificationHandler(message) {
+        async notificationHandler(message) {
             this.notification = "";
-            this.$nextTick(() => {
+            await nextTick(() => {
                 this.notification = message;
             });
         }
     }
-};
+});
 //# sourceMappingURL=notificationHandler.js.map

@@ -7,23 +7,11 @@ import { utils } from "@darwin-studio/ui-vue";
 export default createStore({
     state() {
         return {
-            lastError: "",
-            dictionaryList: [
-            // Expected format:
-            /* {
-              id: 'dictionary id',
-              name: 'dictionary name',
-              rowMap: {
-                // use Object to prevent duplicates
-                'from_1': 'to_1',
-                'from_2': 'to_2',
-              }
-            } */
-            ]
+            dictionaryList: []
         };
     },
     mutations: {
-        CREATE_DICTIONARY(state, payload = {}) {
+        CREATE_DICTIONARY(state, payload) {
             // the mutation can be reached without the action, so perform consistency check here too
             if (payload.id) {
                 checkDictionaryNameConsistency(state, payload.name);
@@ -35,26 +23,26 @@ export default createStore({
                 throw new Error(interfaceCopyright.emptyDictionaryId);
             }
         },
-        CREATE_DICTIONARY_ROW(state, payload = {}) {
+        CREATE_DICTIONARY_ROW(state, payload) {
             // the mutation can be reached without the action, so perform consistency check here too
             checkDictionaryRowDataConsistency(state, payload);
             const dictionaryIndex = getDictionaryIndexById(state, payload.id);
-            if (typeof dictionaryIndex === "number") {
+            if (dictionaryIndex !== -1) {
                 state.dictionaryList[dictionaryIndex].rowMap[payload.from] = payload.to;
             }
             else {
                 throw new Error(interfaceCopyright.invalidDictionaryId);
             }
         },
-        UPDATE_DICTIONARY_ROW(state, payload = {}) {
+        UPDATE_DICTIONARY_ROW(state, payload) {
             // don't checkForDuplicate here because it will be the row itself
             checkDictionaryRowDataConsistency(state, payload, true);
             const dictionaryIndex = getDictionaryIndexById(state, payload.id);
-            if (typeof dictionaryIndex === "number") {
+            if (dictionaryIndex !== -1) {
                 // find out if there row with with 'prevFrom'
                 const prevRowTo = getDictionaryRowToByRowFrom(state, payload.id, payload.prevFrom);
                 if (prevRowTo) {
-                    if (payload.prevFrom !== payload.from) {
+                    if (payload.prevFrom && payload.prevFrom !== payload.from) {
                         // we need to insert new key to the rowMap object
                         delete state.dictionaryList[dictionaryIndex].rowMap[payload.prevFrom];
                     }
@@ -69,9 +57,9 @@ export default createStore({
                 throw new Error(interfaceCopyright.invalidDictionaryId);
             }
         },
-        DELETE_DICTIONARY_ROW(state, payload = {}) {
+        DELETE_DICTIONARY_ROW(state, payload) {
             const dictionaryIndex = getDictionaryIndexById(state, payload.id);
-            if (dictionaryIndex !== undefined) {
+            if (dictionaryIndex !== -1) {
                 // find out if there row with with 'from'
                 const rowTo = getDictionaryRowToByRowFrom(state, payload.id, payload.from);
                 if (rowTo) {
@@ -85,9 +73,9 @@ export default createStore({
                 throw new Error(interfaceCopyright.invalidDictionaryId);
             }
         },
-        DELETE_DICTIONARY(state, payload = {}) {
+        DELETE_DICTIONARY(state, payload) {
             const dictionaryIndex = getDictionaryIndexById(state, payload.id);
-            if (dictionaryIndex !== undefined) {
+            if (dictionaryIndex !== -1) {
                 state.dictionaryList.splice(dictionaryIndex, 1);
             }
             else {
@@ -96,7 +84,7 @@ export default createStore({
         }
     },
     actions: {
-        /* async */ createDictionary({ commit, state }, payload = {}) {
+        /* async */ createDictionary({ commit, state }, payload) {
             // we don't actually want to send inconsistent data to server,
             // so therefore we are forced to check consistency check twice, here and in the mutation
             checkDictionaryNameConsistency(state, payload.name);
@@ -110,7 +98,7 @@ export default createStore({
                 ...serverResponse
             });
         },
-        /* async */ createDictionaryRow({ commit, state }, payload = {}) {
+        /* async */ createDictionaryRow({ commit, state }, payload) {
             // here we also need to do API request but omit this for simplicity
             checkDictionaryRowDataConsistency(state, payload);
             // /* await */ TODO: push new data to the API here
@@ -122,9 +110,9 @@ export default createStore({
             // /* await */ TODO: push new data to the API here
             commit("UPDATE_DICTIONARY_ROW", payload);
         },
-        /* async */ deleteDictionaryRow({ commit }, payload = {}) {
+        /* async */ deleteDictionaryRow({ commit }, payload) {
             // here we also need to do API request but omit this for simplicity
-            if (payload.id && payload.from) {
+            if (payload.id && payload.from && payload.to) {
                 // use 'id' and 'from' to identify row
                 // /* await */ TODO: push new data to the API here
                 commit("DELETE_DICTIONARY_ROW", payload);
@@ -187,7 +175,12 @@ const getDictionaryIndexById = (state, id) => {
     return state.dictionaryList.findIndex(dictionary => dictionary.id === id);
 };
 const getDictionaryRowToByRowFrom = (state, id, from) => {
-    const dictionaryIndex = getDictionaryIndexById(state, id);
-    return state.dictionaryList[dictionaryIndex].rowMap[from];
+    if (from) {
+        const dictionaryIndex = getDictionaryIndexById(state, id);
+        return state.dictionaryList[dictionaryIndex].rowMap[from];
+    }
+    else {
+        return null;
+    }
 };
 //# sourceMappingURL=index.js.map
